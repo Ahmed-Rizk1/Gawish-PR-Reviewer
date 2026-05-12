@@ -16,7 +16,13 @@ async def receive_webhook(request: Request) -> JSONResponse:
     try:
         raw = await request.json()
         payload = WebhookPayload(**raw)
-        result = await _service.handle_event(payload)
+        github_event = request.headers.get("X-GitHub-Event")
+        
+        if github_event == "issue_comment":
+            result = await _service.handle_comment(payload)
+        else:
+            result = await _service.handle_event(payload)
+            
         return JSONResponse(content=result, status_code=200)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)

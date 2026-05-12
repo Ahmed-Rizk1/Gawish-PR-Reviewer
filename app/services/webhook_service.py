@@ -45,6 +45,16 @@ Diffs:
 {diff}
 """
 
+REPLY_PROMPT = """You are an expert Senior Software Engineer and Security Researcher participating in a discussion about a code review.
+Be concise, defend your suggestions if they are correct, or acknowledge if the user has a better point.
+
+Code Diff:
+{diff}
+
+Discussion Thread:
+{comments}
+"""
+
 
 class WebhookService:
     def __init__(self):
@@ -60,6 +70,47 @@ class WebhookService:
 
         print(review)
         return {"status": "success", "review": review}
+
+    async def handle_comment(self, payload: WebhookPayload) -> dict:
+        if payload.action != "created":
+            return {"status": "ignored", "reason": "Not a created comment"}
+        
+        if not payload.issue or "pull_request" not in payload.issue:
+            return {"status": "ignored", "reason": "Not a PR comment"}
+            
+        if payload.sender and payload.sender.get("type") == "Bot":
+            return {"status": "ignored", "reason": "Bot comment"}
+            
+        full_name = payload.repository["full_name"]
+        pr_number = payload.issue["number"]
+        
+        diff = await self._fetch_diff(full_name, pr_number)
+        comments_text = await self._fetch_comments(full_name, pr_number)
+        
+        reply = await self._generate_reply(diff, comments_text)
+        await self._post_comment(full_name, pr_number, reply)
+        
+        return {"status": "success", "reply": reply}
+
+    async def _fetch_comments(self, full_name: str, pr_number: int) -> str:
+        url = f"{GITHUB_API}/repos/{full_name}/issues/{pr_number}/comments"
+        headers = {
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github+json",
+        }
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, headers=headers, follow_redirects=True)
+            response.raise_for_status()
+            comments = response.json()
+            return "\n\n".join([f"{c['user']['login']}: {c['body']}" for c in comments])
+
+    async def _generate_reply(self, diff: str, comments: str) -> str:
+        prompt = REPLY_PROMPT.format(diff=diff, comments=comments)
+        chat_completion = await self._client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model="llama-3.1-8b-instant",
+        )
+        return chat_completion.choices[0].message.content
 
     async def _fetch_diff(self, full_name: str, pr_number: int) -> str:
         url = f"{GITHUB_API}/repos/{full_name}/pulls/{pr_number}"

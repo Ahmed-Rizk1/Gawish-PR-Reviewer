@@ -9,4 +9,6 @@ class WebhookPayload(BaseModel):
     action: str | None = None
     repository: Dict[str, Any] | None = None
     pull_request: Dict[str, Any] | None = None
+    issue: Dict[str, Any] | None = None
+    comment: Dict[str, Any] | None = None
     sender: Dict[str, Any] | None = None
