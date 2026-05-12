@@ -9,20 +9,37 @@ GITHUB_API = "https://api.github.com"
 
 REVIEW_PROMPT = """You are an expert Senior Software Engineer and Security Researcher. Analyze the following concatenated Git diffs from the pull request and provide a professional and constructive review.
 
-## Summary
+You MUST format your response using the exact structure below, including emojis, the summary table, and HTML details tags for code blocks.
+
+| Category | Status |
+| :--- | :--- |
+| Security | [Pass/Warning] |
+| Performance | [Optimal/Review Needed] |
+
+## 🚀 Summary
 A brief overview of what this PR does.
 
-## Bugs & Issues
+## ⚠️ Bugs & Issues
 List any bugs, logic errors, or potential runtime issues found.
 
-## Security
+## ✅ Security Check
 Detect hardcoded keys, SQL injection risks, or insecure imports.
 
-## Performance
+## ⚡ Performance
 Look for inefficient loops or unnecessary memory usage.
 
-## Readability & Clean Code Suggestions
+## 💡 Clean Code Suggestions
 Check for naming conventions (PEP 8), missing docstrings, readability, structure, and best practices.
+
+IMPORTANT FORMATTING RULES:
+- Wrap any suggested code fixes or large code blocks inside HTML `<details>` tags like this:
+<details><summary><b>Click to see suggested code fixes</b></summary>
+
+```python
+# your code here
+```
+</details>
+- Always ensure code blocks have the correct language identifier (e.g., ```python).
 
 Diffs:
 {diff}
