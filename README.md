@@ -1,27 +1,27 @@
-# 🚀 Antigravity PR-Reviewer: AI-Powered Code Auditor
+# Gawish PR-Reviewer: AI-Powered Code Auditor
 
 An intelligent, lightning-fast pull request reviewer powered by **Groq** and **Llama 3.1**. Gawish-PR-Reviewer acts as a vigilant senior engineer, automatically analyzing code changes, highlighting bugs, checking security vulnerabilities, and actively discussing the code with you right inside GitHub!
 
 ---
 
-## 📖 Overview
+## Overview
 
-The Antigravity PR-Reviewer connects seamlessly to your GitHub repositories via webhooks. On every Pull Request or discussion comment, it instantly pulls the code diffs, analyzes them using Groq's high-speed inference engine (running Llama 3.1 8B), and posts a professional, formatted review.
+The Gawish PR-Reviewer connects seamlessly to your GitHub repositories via webhooks. On every Pull Request or discussion comment, it instantly pulls the code diffs, analyzes them using Groq's high-speed inference engine (running Llama 3.1 8B), and posts a professional, formatted review.
 
 No more waiting for human reviews on basic syntax, performance bottlenecks, or security oversights. 
 
-## ✨ Key Features
+## Key Features
 
-- **🤖 Automated PR Reviews**: Instant feedback on every pull request push.
-- **🛡️ Security Analysis**: Proactively detects hardcoded keys, SQL injection risks, and insecure imports.
-- **⚡ Performance Checks**: Flags inefficient loops and unnecessary memory usage.
-- **💡 Clean Code Suggestions**: Enforces PEP-8 readability, missing docstrings, and proper architecture.
-- **💬 Interactive Discussions**: Reply to the bot's comment to start a discussion! The AI remembers the context and defends its choices or acknowledges a better point.
-- **🏎️ Blazing Fast Inference**: Powered by Groq Cloud and `llama-3.1-8b-instant`.
+- **Automated PR Reviews**: Instant feedback on every pull request push.
+- **Security Analysis**: Proactively detects hardcoded keys, SQL injection risks, and insecure imports.
+- **Performance Checks**: Flags inefficient loops and unnecessary memory usage.
+- **Clean Code Suggestions**: Enforces PEP-8 readability, missing docstrings, and proper architecture.
+- **Interactive Discussions**: Reply to the bot's comment to start a discussion! The AI remembers the context and defends its choices or acknowledges a better point.
+- **Blazing Fast Inference**: Powered by Groq Cloud and `llama-3.1-8b-instant`.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 sequenceDiagram
@@ -42,7 +42,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Language:** Python 3.11+
 - **Framework:** FastAPI
@@ -51,7 +51,7 @@ sequenceDiagram
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 Want to run your own instance of the PR-Reviewer?
 
@@ -88,7 +88,7 @@ uvicorn app.main:app --reload --port 8000
 
 ---
 
-## 🤝 Contribution
+## Contribution
 
 Contributions are always welcome! Whether it's adding new models, improving the prompt, or adding support for GitLab/Bitbucket:
 1. Fork the Project
@@ -99,6 +99,6 @@ Contributions are always welcome! Whether it's adding new models, improving the 
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
