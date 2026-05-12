@@ -7,7 +7,7 @@ from app.core.config import GITHUB_TOKEN
 
 GITHUB_API = "https://api.github.com"
 
-REVIEW_PROMPT = """You are an expert code reviewer. Analyze the following Git diff and provide a structured review with these sections:
+REVIEW_PROMPT = """You are an expert Senior Software Engineer and Security Researcher. Analyze the following concatenated Git diffs from the pull request and provide a professional and constructive review.
 
 ## Summary
 A brief overview of what this PR does.
@@ -15,13 +15,16 @@ A brief overview of what this PR does.
 ## Bugs & Issues
 List any bugs, logic errors, or potential runtime issues found.
 
-## Clean Code Suggestions
-List improvements for readability, naming, structure, or best practices.
+## Security
+Detect hardcoded keys, SQL injection risks, or insecure imports.
 
-## Security Concerns
-Flag any security issues (e.g., exposed secrets, injection risks, improper auth).
+## Performance
+Look for inefficient loops or unnecessary memory usage.
 
-Diff:
+## Readability & Clean Code Suggestions
+Check for naming conventions (PEP 8), missing docstrings, readability, structure, and best practices.
+
+Diffs:
 {diff}
 """
 
